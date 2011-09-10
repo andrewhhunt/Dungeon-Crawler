@@ -1,13 +1,13 @@
 # coding=latin-1
 
 import sys
-import game
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
-import window
+from Window import *
+from Game import *
 
 app = QApplication(sys.argv)
-gameObj = game.gameWorld()
-window = window.Window(gameObj)
+game = Game()
+window = Window(game)
 window.show()
 app.exec_()

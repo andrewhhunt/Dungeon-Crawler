@@ -3,10 +3,10 @@ from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 
 class Window(QDialog):
-	def __init__(self, gameWorld, parent=None):
+	def __init__(self, Game, parent=None):
 		super(Window, self).__init__(parent)
 		
-		self.world = gameWorld
+		self.game = Game
 
 		#create widgets
 		self.textBox = QTextEdit()
@@ -43,7 +43,8 @@ class Window(QDialog):
 		try:
 			text = unicode(self.cmdLine.text())
 			self.textBox.clear()
-			self.textBox.append(self.world.command(text))
+			self.textBox.append(self.game.update(text))
 		except:
 			self.textBox.append("invalid!")
+	
 		self.cmdLine.clear()
