@@ -1,3 +1,5 @@
+# coding=latin-1
+
 import sys
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
@@ -21,9 +23,8 @@ class Window(QDialog):
 		layout.setSizeConstraint(QLayout.SetFixedSize)
 		self.setLayout(layout)
 
-		#set up the commandline
+		#set up the Window
 		self.setWindowTitle("Dungeon Crawler")
-		self.cmdLine.setFocus()
 		self.setSizeGripEnabled(False)
 
 		#set up the text box
@@ -33,7 +34,7 @@ class Window(QDialog):
 		self.textBox.setMinimumSize(QSize(740,400))
 
 		#set up command line
-
+		self.cmdLine.setFocus()
 
 		#Setup connections
 		self.connect(self.cmdLine, SIGNAL("returnPressed()"), self.button, SLOT("animateClick(100)"))
@@ -42,9 +43,12 @@ class Window(QDialog):
 	def updateUi(self):
 		try:
 			text = unicode(self.cmdLine.text())
+			gameState = unicode(self.game.update(text))
 			self.textBox.clear()
-			self.textBox.append(self.game.update(text))
-		except:
-			self.textBox.append("invalid!")
+			self.textBox.append(gameState)
+			self.cmdLine.clear()
+		except Exception, err:
+			self.textBox.append("Invalid Command: " + text)
+			self.textBox.append(unicode(err))
+			self.cmdLine.clear()
 	
-		self.cmdLine.clear()

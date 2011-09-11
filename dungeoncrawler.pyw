@@ -7,7 +7,7 @@ from Window import *
 from Game import *
 
 app = QApplication(sys.argv)
-game = Game()
+game = Game(77,19)
 window = Window(game)
 window.show()
 app.exec_()
