@@ -11,13 +11,8 @@ from DCRoom import *
 
 class Game(object):
 	
-	#default init
-	def __init__(self):
-		self.__gameMap = World(10,10)
-
-	#init with options
 	def __init__(self, width, height):
-		self.__gameMap = World(width, height)
+		self.__gameMap = World(width, height, 200, 15)
 		self.__commandList = {
 				"move" : self.move,"m" : self.move,
 				"look" : self.look,"l" : self.look,
@@ -51,8 +46,8 @@ class Game(object):
 
 			try:
 				return self.__commandList[main](mod)
-			except ValueError:
-				raise ValueError
+			except KeyError:
+				return "Command Borked"
  		except ValueError:
 			raise ValueError
 
@@ -72,7 +67,7 @@ class Game(object):
 		except KeyError:
 			return "Invalid direction: " + direction[0]
 		try:
-			if nextRoom is not None:
+			if nextRoom is not None and nextRoom is not -1:
 				self.__gameMap.setCurrentRoom(nextRoom)
 				return "You moved: " + direction[0]
 			else:
